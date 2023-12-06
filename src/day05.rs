@@ -30,27 +30,13 @@ impl Almanac {
         })
     }
     fn actual_lowest_location(&self) -> usize {
-        std::thread::scope(|s| {
-            let threads: Vec<_> = self
-                .seeds
-                .windows(2)
-                .step_by(2)
-                .map(|w| {
-                    s.spawn(|| {
-                        let mut min = usize::MAX;
-                        for n in w[0]..(w[0] + w[1]) {
-                            min = min.min(self.seed_map(n));
-                        }
-                        min
-                    })
-                })
-                .collect();
-            threads
-                .into_iter()
-                .map(|t| t.join().unwrap())
-                .min()
-                .unwrap()
-        })
+        use rayon::prelude::*;
+        self.seeds
+            .par_chunks(2)
+            .flat_map(|chunk| chunk[0]..chunk[0] + chunk[1])
+            .map(|seed| self.seed_map(seed))
+            .min()
+            .unwrap()
     }
 }
 impl From<&str> for Almanac {
