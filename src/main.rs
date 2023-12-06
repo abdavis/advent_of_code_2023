@@ -3,6 +3,7 @@ mod day02;
 mod day03;
 mod day04;
 mod day05;
+mod day06;
 fn main() {
     println!("{}", benchmark(day01::run));
 
@@ -12,7 +13,9 @@ fn main() {
 
     println!("{}", benchmark(day04::run));
 
-    println!("{}", benchmark(day05::run));
+    //    println!("{}", benchmark(day05::run));
+
+    println!("{}", benchmark(day06::run));
 }
 fn benchmark(f: impl Fn() -> String) -> String {
     use std::time::Instant;
