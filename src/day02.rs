@@ -2,7 +2,7 @@ const INPUT: &str = include_str!("inputs/day02.txt");
 pub fn run() -> String {
     let games: Vec<Game> = INPUT.lines().map(|l| l.into()).collect();
     format!(
-        "{}\n{}",
+        "{}\n{}\n",
         sum_valid(12, 13, 14, &games),
         games.iter().map(|g| g.power()).sum::<usize>()
     )

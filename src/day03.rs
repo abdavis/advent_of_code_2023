@@ -18,17 +18,31 @@ impl<const N: usize> Schematic<N> {
             .iter()
             .enumerate()
             .flat_map(|(r, row)| {
-                row.iter().enumerate().filter_map(|(c, value)| match value {
-                    Value::Empty | Value::Num(_) => None,
+                row.iter()
+                    .enumerate()
+                    .filter_map(move |(c, value)| match value {
+                        Value::Empty | Value::Num(_) => None,
 
-                    Value::Symbol(s) => if r > 0 {},
-                })
+                        Value::Symbol(s) => {
+                            if r > 0 {
+                                todo!()
+                            } else {
+                                todo!()
+                            }
+                        }
+                    })
             })
             .collect()
     }
-    fn extract_number(&self, row: usize, col: usize) -> usize {}
-    fn extract_left(&self, row: usize, col: usize) -> usize {}
-    fn extract_right(&self, row: usize, col: usize) -> usize {}
+    fn extract_number(&self, row: usize, col: usize) -> usize {
+        todo!()
+    }
+    fn extract_left(&self, row: usize, col: usize) -> usize {
+        todo!()
+    }
+    fn extract_right(&self, row: usize, col: usize) -> usize {
+        todo!()
+    }
 }
 
 impl<const N: usize> From<&str> for Schematic<N> {
