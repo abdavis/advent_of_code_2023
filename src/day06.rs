@@ -1,11 +1,38 @@
 pub fn run() -> String {
-    format!("{:?}", parse(TEST))
+    let races = parse(INPUT);
+    let num = races
+        .iter()
+        .map(|r| r.count_winning())
+        .reduce(|acc, n| acc * n)
+        .unwrap();
+    let races = RaceRecord::fix_kerning(races);
+    format!("{}\n{}", num, races.count_winning())
 }
 
 #[derive(Debug)]
 struct RaceRecord {
     time: usize,
     distance: usize,
+}
+
+impl RaceRecord {
+    fn count_winning(&self) -> usize {
+        (0..self.time)
+            .skip(1)
+            .filter(|n| n * (self.time - n) > self.distance)
+            .count()
+    }
+    fn fix_kerning(input: Vec<Self>) -> Self {
+        let mut time = String::new();
+        let mut distance = String::new();
+        for race in input {
+            time += &format!("{}", race.time);
+            distance += &format!("{}", race.distance);
+        }
+        let time = time.parse().unwrap();
+        let distance = distance.parse().unwrap();
+        Self { time, distance }
+    }
 }
 
 fn parse(input: &str) -> Vec<RaceRecord> {
