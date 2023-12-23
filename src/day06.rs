@@ -1,12 +1,8 @@
 pub fn run() -> String {
     let races = parse(INPUT);
-    let num = races
-        .iter()
-        .map(|r| r.count_winning())
-        .reduce(|acc, n| acc * n)
-        .unwrap();
+    let num: usize = races.iter().map(|r| r.count_winning()).product();
     let races = RaceRecord::fix_kerning(races);
-    format!("{}\n{}", num, races.count_winning())
+    format!("{}\n{}\n", num, races.count_winning())
 }
 
 #[derive(Debug)]
